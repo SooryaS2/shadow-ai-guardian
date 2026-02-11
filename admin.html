@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shadow AI Guardian - Admin Portal</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            background-color: #000000;
+            color: #FFFFFF;
+            padding: 40px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow-y: auto;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1100px;
+        }
+
+        header {
+            margin-bottom: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: 700;
+            background: linear-gradient(90deg, #32D74B, #0A84FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .admin-badge {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .card {
+            background: #1C1C1E;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            max-width: 100%;
+            text-align: left;
+        }
+
+        .setting-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .setting-info h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: white;
+        }
+
+        .setting-info p {
+            font-size: 14px;
+            color: #8E8E93;
+            margin: 0;
+        }
+
+        .table-container {
+            background: #1C1C1E;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: rgba(255, 255, 255, 0.03);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #8E8E93;
+            padding: 18px 24px;
+            text-align: left;
+        }
+
+        td {
+            padding: 18px 24px;
+            font-size: 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: #E5E5EA;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .risk-badge {
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .risk-critical {
+            background: rgba(255, 69, 58, 0.2);
+            color: #FF453A;
+            border: 1px solid rgba(255, 69, 58, 0.3);
+        }
+
+        .risk-high {
+            background: rgba(255, 159, 10, 0.2);
+            color: #FF9F0A;
+            border: 1px solid rgba(255, 159, 10, 0.3);
+        }
+
+        .risk-medium {
+            background: rgba(255, 214, 10, 0.2);
+            color: #FFD60A;
+            border: 1px solid rgba(255, 214, 10, 0.3);
+        }
+
+        .risk-low {
+            background: rgba(50, 215, 75, 0.2);
+            color: #32D74B;
+            border: 1px solid rgba(50, 215, 75, 0.3);
+        }
+
+        .log-details {
+            font-family: 'JetBrains Mono', 'Menlo', monospace;
+            font-size: 12px;
+            color: #A1A1A6;
+            background: #000000;
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 8px;
+            display: block;
+        }
+
+        .auth-check {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .auth-card {
+            background: #1C1C1E;
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            width: 320px;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .auth-input {
+            width: 100%;
+            background: #000000;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 14px;
+            border-radius: 10px;
+            font-size: 16px;
+            margin: 20px 0;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .auth-input:focus {
+            border-color: #0A84FF;
+            box-shadow: 0 0 10px rgba(10, 132, 255, 0.3);
+        }
+
+        .auth-btn {
+            background: #0A84FF;
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            width: 100%;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(10, 132, 255, 0.3);
+        }
+
+        .export-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .export-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Auth Wall -->
+    <div id="auth-wall" class="auth-check">
+        <div class="auth-card">
+            <h1 style="font-size: 24px; margin-bottom: 10px;">Admin Login</h1>
+            <p style="color: #8E8E93; font-size: 14px;">Enter credentials to access neural logs.</p>
+            <input type="password" id="admin-pass" class="auth-input" placeholder="Enter Access Code">
+            <button id="login-btn" class="auth-btn">Authenticate</button>
+            <p id="auth-error" style="color: #FF453A; margin-top: 15px; font-size: 13px; display: none;">Access Denied:
+                Invalid Credentials</p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container hidden" id="admin-content">
+        <header>
+            <div style="display: flex; align-items: center; gap: 16px;">
+                <h1>Admin Portal</h1>
+                <span class="admin-badge">Full Access</span>
+            </div>
+            <button id="export-btn" class="export-btn">Export Log Data JSON</button>
+        </header>
+
+        <!-- Settings Card -->
+        <div class="card">
+            <div class="setting-row">
+                <div class="setting-info">
+                    <h3>Surveillance Intensity</h3>
+                    <p>Adjust data capture resolution for AI interactions.</p>
+                </div>
+                <!-- Reusing slider logic but styled via CSS -->
+                <div style="display: flex; align-items: center; gap: 20px;">
+                    <span id="label-low" style="color: #32D74B; font-weight: 600;">Metadata</span>
+                    <input type="range" id="surveillance-slider" min="0" max="1" step="1" value="0"
+                        style="width: 200px;">
+                    <span id="label-high" style="color: #8E8E93; font-weight: 600;">Full Text</span>
+                </div>
+            </div>
+            <p id="slider-desc"
+                style="font-size: 13px; color: #8E8E93; margin-top: 10px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px;">
+                <strong>Current Mode: Metadata Only.</strong> Logs only domain, time, and risk level. Content is
+                anonymous.
+            </p>
+        </div>
+
+        <!-- Logs Table -->
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 15%">Timestamp</th>
+                        <th style="width: 15%">Domain</th>
+                        <th style="width: 15%">User Action</th>
+                        <th style="width: 40%">Details / Neural Trace</th>
+                        <th style="width: 15%">Threat Level</th>
+                    </tr>
+                </thead>
+                <tbody id="logs-body">
+                    <!-- Logs injected here -->
+                </tbody>
+            </table>
+            <div id="empty-state" class="hidden" style="padding: 60px; text-align: center; color: #8E8E93;">
+                <p>No active threats detected in neural logs.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- We need admin.js to handle logic -->
+    <script src="admin.js"></script>
+</body>
+
+</html>
