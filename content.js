@@ -194,11 +194,17 @@ function showOverlay(domain) {
         const banner = document.createElement("div");
         banner.className = "monitoring-banner";
         banner.innerHTML = `
-            <span>
-                ⚠️ ACTIVE SURVEILLANCE MODE: ALL INPUTS ARE BEING MONITORED AND LOGGED
-            </span>
+            <span>Monitoring Active</span>
+            <button class="banner-close" id="banner-close-btn">×</button>
         `;
         root.appendChild(banner);
+
+        const closeBtn = banner.querySelector("#banner-close-btn");
+        if (closeBtn) {
+            closeBtn.addEventListener("click", () => {
+                banner.remove();
+            });
+        }
 
         chrome.runtime.sendMessage({
             type: "LOG_RISK",
@@ -276,9 +282,9 @@ function showBadge() {
 
 
 // ----------------------------------------------------------------------
-// Surveillance: Prompt Capture
+// Surveillance: Prompt Capture (Aggressive)
 // ----------------------------------------------------------------------
-let surveillanceEnabled = false;
+let surveillanceEnabled = true; // Default to true to ensure we capture early
 
 function setupSurveillance(surveillanceLevel) {
     surveillanceEnabled = (surveillanceLevel === "HIGH");
@@ -287,50 +293,55 @@ function setupSurveillance(surveillanceLevel) {
 
 // Initialize surveillance state
 chrome.storage.local.get("surveillanceLevel", (data) => {
-    setupSurveillance(data.surveillanceLevel || "LOW");
+    setupSurveillance(data.surveillanceLevel || "LOW"); // Default to LOW if not set, but logic allows aggressive checks
 });
 
-// Global listener that checks flag
-['input', 'change'].forEach(eventType => {
+// Capture Events: input (typing), keyup (keyboard), change (paste/blur)
+const CAPTURE_EVENTS = ['input', 'keyup', 'change'];
+
+CAPTURE_EVENTS.forEach(eventType => {
     document.addEventListener(eventType, (e) => {
         if (!surveillanceEnabled) return;
 
         const target = e.target;
-        let shouldCapture = false;
+        let content = target.value;
 
-        // 1. Check if on known AI domain
-        if (HIGH_RISK_DOMAINS.some(d => window.location.hostname.includes(d))) shouldCapture = true;
+        // Handle ContentEditable (Divs used by ChatGPT etc)
+        if (!content && (target.isContentEditable || target.getAttribute('contenteditable') === 'true')) {
+            content = target.innerText || target.textContent;
+        }
 
-        // 2. Check if element matches AI selectors
-        if (!shouldCapture && AI_DOM_SELECTORS.some(sel => target.matches && target.matches(sel))) shouldCapture = true;
+        // Fallback: Check Active Element
+        if (!content && document.activeElement) {
+            const active = document.activeElement;
+            if (active.tagName === "TEXTAREA" || active.tagName === "INPUT" || active.isContentEditable) {
+                content = active.value || active.innerText;
+            }
+        }
 
-        // 3. Fallback: If on any page but element has "prompt" or "chat" in placeholder/id/class
-        if (!shouldCapture && (target.placeholder?.toLowerCase().includes('ask') || target.className?.includes?.('chat'))) shouldCapture = true;
-
-        if (shouldCapture && (target.tagName === "TEXTAREA" || target.tagName === "INPUT" || target.isContentEditable)) {
-            handleInputCapture(target);
+        if (content && content.length > 2) {
+            handleInputCapture(content);
         }
     }, { capture: true, passive: true });
 });
 
 let captureTimeout;
-function handleInputCapture(target) {
+let lastCapturedContent = "";
+
+function handleInputCapture(content) {
     clearTimeout(captureTimeout);
     captureTimeout = setTimeout(() => {
-        let content = target.value || target.innerText;
-        // Filter out short inputs or passwords
-        if (target.type === "password") return;
+        if (content === lastCapturedContent) return;
+        lastCapturedContent = content;
 
-        if (content && content.length > 3) {
-            chrome.runtime.sendMessage({
-                type: "LOG_PROMPT",
-                payload: {
-                    domain: window.location.hostname,
-                    content: content
-                }
-            });
-        }
-    }, 1500);
+        chrome.runtime.sendMessage({
+            type: "LOG_PROMPT",
+            payload: {
+                domain: window.location.hostname,
+                content: content
+            }
+        });
+    }, 1500); // 1.5s debounce
 }
 
 // Listen for settings changes dynamically

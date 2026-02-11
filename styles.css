@@ -80,6 +80,7 @@ body {
     font-weight: 700;
     background: linear-gradient(90deg, #FF453A, #FF9F0A);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
     margin-bottom: 12px;
     letter-spacing: -0.5px;
@@ -331,56 +332,78 @@ button {
 /* Layer 4: Persistent Monitoring Banner */
 .monitoring-banner {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 40px;
-    background: linear-gradient(90deg, rgba(255, 69, 58, 0.9), rgba(255, 0, 0, 0.9));
-    color: white;
+    top: 10px;
+    right: 10px;
+    left: auto;
+    /* Not full width */
+    width: auto;
+    height: auto;
+    padding: 8px 16px;
+    background: rgba(255, 69, 58, 0.2);
+    /* Translucent red */
+    color: #FF453A;
     z-index: 2147483647;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 14px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    box-shadow: 0 5px 20px rgba(255, 69, 58, 0.5);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    border: 1px solid rgba(255, 69, 58, 0.4);
+    border-radius: 8px;
+    /* Rounded corners */
     backdrop-filter: blur(10px);
-    border-bottom: 2px solid #FF453A;
-    pointer-events: none;
-    /* Let clicks pass through if needed, though usually banners block */
+    pointer-events: auto;
+    /* Allow interaction for close btn */
     animation: slideDown 0.5s ease-out;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    gap: 12px;
 }
 
 .monitoring-banner span {
     display: flex;
     align-items: center;
-    gap: 10px;
-    animation: pulse-text 2s infinite;
+    gap: 6px;
+}
+
+.monitoring-banner span::before {
+    content: '●';
+    color: #FF453A;
+    font-size: 10px;
+    animation: pulse 1s infinite;
 }
 
 @keyframes slideDown {
     from {
-        transform: translateY(-100%);
+        transform: translateY(-20px);
+        opacity: 0;
     }
 
     to {
         transform: translateY(0);
+        opacity: 1;
     }
 }
 
-@keyframes pulse-text {
-    0% {
-        opacity: 1;
-    }
+.banner-close {
+    background: transparent;
+    border: none;
+    color: #FF453A;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 0;
+    opacity: 0.7;
+    transition: 0.2s;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
-    50% {
-        opacity: 0.7;
-    }
-
-    100% {
-        opacity: 1;
-    }
+.banner-close:hover {
+    opacity: 1;
+    transform: scale(1.1);
 }
 
 /* Enhancing "High Tech" feel for buttons and inputs */
