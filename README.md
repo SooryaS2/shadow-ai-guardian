@@ -1,6 +1,7 @@
 # Shadow AI Guardian 🛡️
 
 **Enterprise-Grade AI Usage Monitoring & Protection System**
+**Built By: Soorya Selvakumar, Srijit Paul, Natasha Pidwani, Samuel Lyons**
 
 Shadow AI Guardian is a Chrome Extension built for corporate and educational environments to detect, monitor, and manage the use of unauthorized AI tools. It provides multi-layered threat detection, group-based team management, per-user activity tracking, and real-time surveillance capabilities for security auditing.
 
