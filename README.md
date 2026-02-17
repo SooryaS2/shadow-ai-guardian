@@ -21,24 +21,17 @@ Shadow AI Guardian is a Chrome Extension built for corporate and educational env
 
 ### 👥 Group & Team Management
 
-- **Create Groups** — Admins create named groups with unique 6-character join codes
-- **Per-Group Settings** — Each group can have its own:
-  - Approved URL whitelist
-  - Approved AI model list
-  - Surveillance intensity level (Metadata Only / Full Surveillance)
-- **Member Tracking** — Each user provides their name when joining, tracked individually within the group
-- **Dynamic Membership** — Real-time member count and member list visible on group cards
+* **Create Groups** — Admins create named groups with unique 6-character join codes.
+* **Per-Group Settings** — Each group can have its own approved URL whitelist, approved AI model list, and surveillance intensity level (Metadata Only / Full Surveillance).
+* **Member Tracking** — Each user provides their name when joining, tracked individually within the group.
+* **Dynamic Membership** — Real-time member count and member list visible on group cards.
 
 ### 📡 Surveillance System
 
-- **Metadata Only Mode** — Logs domain, timestamp, action, and risk level for every AI interaction
-- **Full Surveillance Mode** — Additionally captures the **full text of prompts** entered into AI tools
-- **Per-Group Surveillance** — Each group can have its own surveillance intensity, independent of the global setting
-- **Enhanced Prompt Capture** — Works with modern AI interfaces:
-  - Standard input/textarea elements
-  - ContentEditable & ProseMirror editors (used by ChatGPT, Claude)
-  - Submit-time capture (Enter key + Send button clicks) to catch prompts before they're cleared
-  - Periodic polling for Shadow DOM editors that don't emit standard events
+* **Metadata Only Mode** — Logs domain, timestamp, action, and risk level for every AI interaction.
+* **Full Surveillance Mode** — Additionally captures the **full text of prompts** entered into AI tools.
+* **Per-Group Surveillance** — Each group can have its own surveillance intensity, independent of the global setting.
+* **Enhanced Prompt Capture** — Works with modern AI interfaces, including standard input/textarea elements, ContentEditable & ProseMirror editors, submit-time capture to catch prompts before they are cleared, and periodic polling for Shadow DOM editors.
 
 ### 🔍 Sensitive Data Detection
 
@@ -55,45 +48,39 @@ Automatically detects and flags the following data types in real-time:
 
 ### 📊 Dynamic User Dashboard
 
-- **Personalized Stats** — Each user sees only their own activity (filtered by name and group)
-- **Real-Time Updates** — Dashboard refreshes every 4 seconds + instant updates via storage change listener
-- **Live Monitoring Bar** — Shows current surveillance mode with pulsing indicator
-- **Threat Pulse Animation** — Stat cards flash red when new threats are detected
-- **Activity Feed** — Slide-in animated activity items with risk-level color coding
-- **Filter by Risk** — View All, Critical, High, Medium, or Low risk events
+* **Personalized Stats** — Each user sees only their own activity (filtered by name and group).
+* **Real-Time Updates** — Dashboard refreshes every 4 seconds + instant updates via storage change listener.
+* **Live Monitoring Bar** — Shows current surveillance mode with a pulsing indicator.
+* **Threat Pulse Animation** — Stat cards flash red when new threats are detected.
+* **Activity Feed** — Slide-in animated activity items with risk-level color coding.
+* **Filter by Risk** — View All, Critical, High, Medium, or Low risk events.
 
 ### 🏢 Admin Portal
 
-- **Dashboard Overview** — Aggregate stats across all groups and users
-- **Group Management** — Create, edit, delete groups with per-group settings
-- **Audit Logs** — Searchable, filterable log table with:
-  - User name (green) + Group name (blue) identification
-  - Captured prompt display with blue-accent styling
-  - Risk level badges
-  - Sensitive data type tags
-  - Filter by group
-  - Export to JSON
+* **Dashboard Overview** — Aggregate stats across all groups and users.
+* **Group Management** — Create, edit, and delete groups with per-group settings.
+* **Audit Logs** — Searchable, filterable log table with user/group identification, captured prompt display, risk level badges, sensitive data type tags, and JSON export capabilities.
 
 ### 🛡️ Stealth & Robustness
 
-- **Shadow DOM Injection** — UI elements are isolated in a Shadow Root to prevent style conflicts and detection
-- **Anti-Tamper Mechanisms** — Automatically re-injects protection layers if removed by the user or third-party scripts
-- **Persistent Banner** — If a user bypasses the block screen, a persistent "Active Surveillance" banner remains visible
+* **Shadow DOM Injection** — UI elements are isolated in a Shadow Root to prevent style conflicts and detection.
+* **Anti-Tamper Mechanisms** — Automatically re-injects protection layers if removed by the user or third-party scripts.
+* **Persistent Banner** — If a user bypasses the block screen, a persistent "Active Surveillance" banner remains visible.
 
 ---
 
 ## 🛠️ Installation
 
 1. **Clone this repository:**
-   ```bash
-   git clone https://github.com/SooryaS2/shadow-ai-guardian.git
-   cd shadow-ai-guardian
-   ```
+   ```bash
+   git clone [https://github.com/SooryaS2/shadow-ai-guardian.git](https://github.com/SooryaS2/shadow-ai-guardian.git)
+   cd shadow-ai-guardian
+   ```
 
 2. **Load in Chrome:**
-   - Open Chrome and navigate to `chrome://extensions`
-   - Enable **Developer Mode** (toggle in the top right)
-   - Click **Load unpacked** and select the cloned directory
+   Open Chrome and navigate to `chrome://extensions`
+   Enable **Developer Mode** (toggle in the top right)
+   Click **Load unpacked** and select the cloned directory
 
 ---
 
@@ -101,31 +88,23 @@ Automatically detects and flags the following data types in real-time:
 
 ### For Users
 
-1. Click the extension icon to open the **Dashboard**
-2. Choose to **Join a Team** (enter your name + team code) or **Skip** (standard mode)
-3. View your personalized stats, risk distribution, and activity feed
-4. The monitoring bar shows your current surveillance level
+1. Click the extension icon to open the **Dashboard**.
+2. Choose to **Join a Team** (enter your name + team code) or **Skip** (standard mode).
+3. View your personalized stats, risk distribution, and activity feed.
+4. The monitoring bar shows your current surveillance level.
 
 ### For Admins
 
-1. Access the Admin Portal via the dashboard footer link or `admin.html`
+1. Access the Admin Portal via the dashboard footer link or `admin.html`.
 2. **Default Password:** `admin123`
-3. **Dashboard Tab** — View aggregate statistics and trends
-4. **Groups Tab** — Create and manage teams:
-   - Set group name, approved URLs/models
-   - Set surveillance intensity per group
-   - View member list and member count
-   - Share the 6-character join code with team members
-5. **Logs Tab** — View detailed audit logs:
-   - Filter by group using the dropdown
-   - See user names, captured prompts, and sensitive data flags
-   - Export all logs as JSON
-6. **Settings Tab** — Configure global surveillance level and admin password
+3. **Dashboard Tab** — View aggregate statistics and trends.
+4. **Groups Tab** — Create and manage teams, set approved URLs/models, configure surveillance intensity, view member lists, and share the 6-character join code.
+5. **Logs Tab** — View detailed audit logs, filter by group, inspect user names and captured prompts, and export all logs as JSON.
+6. **Settings Tab** — Configure global surveillance level and admin password.
 
 ---
 
 ## 📁 Project Structure
-
 ```
 shadow-ai-guardian/
 ├── manifest.json        # Chrome Extension manifest (Manifest V3)
@@ -138,17 +117,41 @@ shadow-ai-guardian/
 ├── styles.css           # Shared styles
 ├── icons/               # Extension icons (16px, 48px, 128px)
 └── README.md
-```
 
+```
 ---
 
 ## ⚙️ Technical Details
 
-- **Platform:** Chrome Extension (Manifest V3)
-- **Permissions:** `storage`, `webNavigation`, `webRequest`, `tabs`, `activeTab`
-- **Content Security:** Shadow DOM isolation for all injected UI
-- **Data Storage:** `chrome.storage.local` for logs, groups, settings, and user sessions
-- **Log Capacity:** Up to 1000 entries with automatic rollover
+* **Platform:** Chrome Extension (Manifest V3)
+* **Permissions:** `storage`, `webNavigation`, `webRequest`, `tabs`, `activeTab`
+* **Content Security:** Shadow DOM isolation for all injected UI
+* **Data Storage:** `chrome.storage.local` for logs, groups, settings, and user sessions
+* **Log Capacity:** Up to 1000 entries with automatic rollover
+
+---
+
+## 🔮 Future Improvements
+
+While Shadow AI Guardian currently provides strong client-side protection, transitioning this from a hackathon prototype to a fully deployable enterprise tool requires several key architecture and feature upgrades:
+
+### 🏢 Enterprise Readiness & Cloud Backend
+
+* **Centralized Cloud Management:** Migrate away from `chrome.storage.local` to a dedicated secure backend (e.g., Node.js with PostgreSQL). This allows admins to push dynamic policy updates and sync audit logs across all managed company devices in real-time.
+* **SSO & SAML Integration:** Replace the basic "join code" and default admin password with standard enterprise authentication like Google Workspace or Microsoft Entra ID for seamless, secure employee onboarding.
+* **MDM Deployment Integration:** Ensure the extension is optimized to be force-installed via Mobile Device Management (MDM) tools or Chrome Enterprise Core, preventing end-users from disabling or uninstalling the protection layer.
+
+### 🛡️ Advanced DLP (Data Loss Prevention) Engine
+
+* **Contextual AI Redaction:** Instead of strictly blocking sensitive pastes, implement a lightweight local WebAssembly NLP model. This would automatically scrub sensitive entities (e.g., replacing a real credit card with `[CARD_REDACTED]`) before the prompt reaches the AI, allowing users to still utilize AI safely.
+* **Proprietary Code & Document Fingerprinting:** Move beyond basic Regex patterns to detect specific proprietary company data, source code, or internal database schemas using document fingerprinting or vector embeddings.
+* **Image & OCR Support:** Expand the interception layer to include image uploads. If a user attempts to upload a screenshot of an internal financial dashboard to an AI tool, an OCR (Optical Character Recognition) layer should scan the image and block the upload if confidential text is found.
+
+### 📊 Analytics & Administrative UX
+
+* **Automated Threat Reporting:** Build scheduled PDF/CSV security reports that are automatically emailed to the IT department weekly, highlighting top offenders, trending high-risk AI tools, and prevented data leaks.
+* **Granular Group Policies:** Allow admins to set time-based policies (e.g., blocking generative AI only during core working hours) or department-specific allowances (e.g., the engineering group can use coding assistants, but the finance group cannot).
+* **Customizable Warning Banners:** Allow organizations to display their specific IT acceptable use policy or custom warning messages directly inside the extension's block screen.
 
 ---
 
